@@ -37,6 +37,11 @@ Suggest improvements for my CV to target this job posting https://www.linkedin.c
 > - **Job Details** (`get_job_details`): Retrieve specific job posting details using LinkedIn job IDs
 > - **Job Search** (`search_jobs`): Search for jobs with filters like keywords and location
 > - **Recommended Jobs** (`get_recommended_jobs`): Get personalized job recommendations based on your profile
+> - **Fetch Posts** (`fetch_and_save_linkedin_posts`): Fetch and save a user's LinkedIn posts.
+> - **Get Saved Posts** (`get_saved_posts`): Retrieve saved posts with pagination.
+> - **Search Posts** (`search_posts`): Search saved posts by keywords.
+> - **Top Posts** (`get_top_posts`): Get top posts by engagement metrics.
+> - **Posts by Date** (`get_posts_by_date`): Filter posts by a date range.
 > - **Session Management** (`close_session`): Properly close browser session and clean up resources
 
 > [!NOTE]
@@ -60,15 +65,19 @@ Suggest improvements for my CV to target this job posting https://www.linkedin.c
       "args": [
         "run", "--rm", "-i",
         "-e", "LINKEDIN_COOKIE",
+        "-e", "RAPIDAPI_KEY",
         "stickerdaniel/linkedin-mcp-server:latest"
       ],
       "env": {
-        "LINKEDIN_COOKIE": "XXXXXX..."
+        "LINKEDIN_COOKIE": "XXXXXX...",
+        "RAPIDAPI_KEY": "YYYYYY..."
       }
     }
   }
 }
 ```
+> [!IMPORTANT]
+> The post-related tools require a `RAPIDAPI_KEY` from the [Fresh-LinkedIn-Profile-Data API](https://rapidapi.com/fresh-linkedin-profile-data-fresh-linkedin-profile-data-default/api/fresh-linkedin-profile-data). You can get a free key by subscribing to the basic plan.
 
 ### Getting the LinkedIn Cookie
 <details>
@@ -236,11 +245,17 @@ uv sync --group dev
 # 4. Install pre-commit hooks
 uv run pre-commit install
 
-# 5. Start the server once manually
+# 5. Create a .env file
+# Create a .env file in the root of the project and add your RAPIDAPI_KEY:
+# RAPIDAPI_KEY=your_rapidapi_key
+
+# 6. Start the server once manually
 # You will be prompted to enter your LinkedIn credentials, and they will be securely stored in your OS keychain
 # Once logged in, your cookie will be stored in your OS keychain and used for subsequent runs until it expires
 uv run main.py --no-headless --no-lazy-init
 ```
+> [!IMPORTANT]
+> The post-related tools require a `RAPIDAPI_KEY` from the [Fresh-LinkedIn-Profile-Data API](https://rapidapi.com/fresh-linkedin-profile-data-fresh-linkedin-profile-data-default/api/fresh-linkedin-profile-data). You can get a free key by subscribing to the basic plan.
 
 ### Local Setup Help
 <details>
